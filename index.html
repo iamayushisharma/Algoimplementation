@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+
+</div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Efficient Algorithms for Densest Subgraph Discover</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1>Introduction</h1>
+    <div id="theory-section" style="margin-top: 20px; text-align: left; color: white; max-width: 800px;">
+    <p>The paper "Efficient Algorithms for Densest Subgraph Discovery" by Yixiang Fang et al. addresses the fundamental problem of identifying dense subgraphs within a larger graph. Densest subgraph discovery (DSD) is crucial in many fields such as social network analysis, bioinformatics, and graph database optimization. Traditional approaches for solving DSD rely heavily on maximum flow computations, which can be prohibitively expensive for large graphs, especially when considering complex density measures like h-clique densities. Recognizing these challenges, the authors introduce a new framework that leverages the concept of k-cores and (k,Ψ)-cores to narrow down the search space, thus making the discovery process significantly more efficient.
+
+The paper proposes both exact and approximate algorithms. The Exact algorithm (Algorithm-1) performs a binary search combined with maximum flow computations to precisely find the densest subgraph, while the CoreExact algorithm (Algorithm-4) optimizes this process by using core decomposition to limit computations to smaller, denser regions of the graph. The authors also extend their methods to support generalized pattern-based densities beyond just edges and cliques, enabling a wider range of applications. Through extensive experiments on real and synthetic datasets, the paper demonstrates that their core-based methods are up to four orders of magnitude faster than traditional approaches, without losing accuracy in the exact computation case and maintaining strong guarantees in approximate solutions.
+
+Overall, the paper presents a major advancement in scalable dense subgraph discovery by introducing theoretically sound and practically efficient methods. The core-based strategies not only speed up computation but also provide a unified framework to handle various definitions of graph density, making the techniques highly versatile and applicable across multiple domains.</p>
+    
+    <h3 style="color: #4caf50;">Algorithm-1: Flow-based exact Densest Subgraph Discovery</h3>
+    <p>Algorithm-1 follows a classical approach where a binary search is conducted over possible density values, and in each step, a maximum flow computation is performed on the entire graph.
+<br>
+Time complexity :<br>
+    <img src="./plots/algo1tc.png" alt="Algo 1 TC"" style="width: auto; height: 50px;"> <br>
+where:
+𝑛 = number of vertices,
+𝑑 = maximum degree of a vertex,
+ℎ = size of the clique (for normal densest subgraph, ℎ = 2),
+Λ = set of ( ℎ − 1) -clique instances. 
+</p>
+
+    <h3 style="color: #4caf50;">Algorithm-4: Core-based optimized exact Densest Subgraph Discovery</h3>
+    <p>Algorithm-4 (CoreExact) introduces a core decomposition step before performing flow computations. By focusing only on smaller, denser regions of the graph (known as (k,Ψ)-cores), CoreExact significantly reduces the size of the flow networks involved.
+      <br>  
+   Time complexity :<br>
+    <img src="./plots/algo4tc.png" alt="Algo 4 TC" style="width: auto; height: 50px;"> <br> 
+where:
+𝑛 = number of vertices,
+𝑑 = maximum degree of a vertex,
+ℎ = size of the clique
+</p>
+
+</div>
+
+<h2 style="color: orange;">Running Time vs Graph Size</h2>
+
+<div style="text-align: center; margin-top: 20px;">
+    <img src="./plots/histo.png" alt="Histogram" style="max-width: 600px; width: 80%; height: auto; border: 1px solid white;">
+    <br>
+    <p style="margin-top: 20px;">
+        By referring to the graph, we can see how Algorithm-1 (Exact) gets much slower as the graph size grows, while Algorithm-4 (CoreExact) remains much faster even as the graph gets bigger.
+    </p>
+</div>
+
+
+
+        <div id="comparison-section">
+    <h2>Datasets used:</h2>
+    <p>
+         <img src="./plots/ds.png" alt="Dataset" width="400" height="300" style="border: 1px solid black;">
+    </p>
+    
+    <h3>Results</h3>
+    <ul>
+        <li><strong><u>Implementing algorithm-1:</u></strong><br>
+            
+            <img src="./plots/algo1ds.png" alt="Algo1" width="400" height="300" style="border: 1px solid white;">
+            <br>
+        </li>
+        <li><strong><u>Implementing algorithm-4:</u> </strong><br>
+            
+            <img src="./plots/algo4ds.png" alt="Algo4" width="400" height="300" style="border: 1px solid white;">
+            <br>
+        </li>
+    </ul>
+
+
+    <h3>Conclusion</h3>
+    <p>
+      In this assignment, we implemented two exact algorithms for densest subgraph discovery—one based on a straightforward binary-search plus full-graph max-flow framework (Algorithm 1), and a second that augments this approach with core decomposition to focus flow computations on much smaller, dense “cores” (Algorithm 4, or CoreExact). Both methods correctly identify the densest subgraph, but CoreExact delivers the same exact result far more efficiently in practice by pruning away low-density regions up front.
+
+Empirical evaluation on the real-world small graphs (Yeast, Netscience, As-733, Ca-HepTh, and As-Caida) demonstrated that CoreExact achieves dramatic speedups—often by orders of magnitude—without sacrificing accuracy. This confirms that leveraging core decomposition is a powerful and practical strategy for scaling up densest subgraph discovery to larger, more complex networks.
+</p>
+       
+</div>
+             <h2>Download C++ Implementations</h2>
+    <ul>
+        <li><a href="cpp/algo1.cpp" download>Algo 1</a></li>
+        <li><a href="cpp/algo4.cpp" download>Algo 4</a></li>
+</ul>
+
+          
+        </div>
+    
+   
+
+    <script src="js/script.js"></script>
+</div>
+
+</body>
+</html>
